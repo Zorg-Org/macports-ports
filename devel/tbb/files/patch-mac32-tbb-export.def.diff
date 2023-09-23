@@ -1,0 +1,11 @@
+--- src/tbb/mac32-tbb-export.def.orig	2010-03-08 22:20:52.000000000 +0100
++++ src/tbb/mac32-tbb-export.def	2010-03-08 22:21:19.000000000 +0100
+@@ -114,8 +114,6 @@
+ __ZN3tbb21set_assertion_handlerEPFvPKciS1_S1_E
+ __ZN3tbb8internal13handle_perrorEiPKc
+ __ZN3tbb8internal15runtime_warningEPKcz
+-___TBB_machine_store8_slow_perf_warning
+-___TBB_machine_store8_slow
+ _TBB_runtime_interface_version
+ __ZN3tbb8internal33throw_bad_last_alloc_exception_v4Ev
+ 

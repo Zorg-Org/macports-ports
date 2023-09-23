@@ -1,0 +1,47 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           LegacySupport 1.0
+
+name                paprefs
+
+fetch.type          git
+git.url             https://gitlab.freedesktop.org/pulseaudio/paprefs.git
+
+version             1 
+revision            0
+categories          audio  
+license             GPL 2.0
+maintainers         nomaintainer
+#description        Open source multimedia server.  
+#long_description   An open source Spotify client and gateway to their service
+#homepage           https://owntone.github.io
+
+platform           darwin 9 {
+        compiler.whitelist  macports-gcc-7
+}
+
+platform            darwin 8 {
+        compiler.whitelist macports-gcc-7
+}
+
+
+depends_build-append \
+            port:meson \
+            port:ninja
+
+depends_lib-append \
+            port:gtkmm \
+            port:glademm \
+            port:pulseaudio 
+		   
+depends_run \
+            port:gperf 
+
+use_autoreconf      yes
+
+autoreconf.args     -iv
+
+
+destroot.args       INSTALL_PREFIX=${destroot}${prefix}
+

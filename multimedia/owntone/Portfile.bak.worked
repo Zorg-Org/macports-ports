@@ -1,0 +1,68 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           LegacySupport 1.0
+
+
+name                owntone-server
+
+fetch.type          git
+git.url             https://github.com/owntone/owntone-server.git
+
+version            1 
+revision           0
+categories          multimedia
+license             BSD MIT
+maintainers         nomaintainer
+description         Open source Spotify libspotify
+#long_description    An open source Spotify client and gateway to their service
+#homepage            http://despotify.se/
+
+platforms           darwin
+
+depends_build-append \
+		    port:automake
+	            
+
+depends_lib-append \
+	            port:libevent \
+                    port:libgcrypt \
+                    port:protobuf-c \
+		    port:libunistring \
+		    port:libconfuse \
+                    port:ffmpeg \
+		    port:libwebsockets \
+ 	   	    port:libplist \
+                    port:libsodium \
+		    port:mxml \
+		    port:libinotify-kqueue
+
+depends_run \
+		    port:gperf 
+
+use_autoreconf  	yes
+
+#autoreconf.args 	-i
+
+destroot.args       INSTALL_PREFIX=${destroot}${prefix}
+
+#worksrcdir          src
+
+#patchfiles          patch-Makefile.local.mk.dist.diff \
+#                    patch-lib-local.mk.diff \
+#                    patch-lib-sndqueue.h.diff
+
+#post-patch {
+#    reinplace s|@PREFIX@|${prefix}|g \
+#        ${worksrcpath}/Makefile.local.mk.dist \
+#        ${worksrcpath}/lib/local.mk
+#}
+
+#use_configure       no
+#
+#build.args          CC="${configure.cc} ${configure.cc_archflags}" \
+#                    CLIENT_GATEWAY=1
+#
+#destroot.args       INSTALL_PREFIX=${destroot}${prefix}
+
+
