@@ -1,0 +1,88 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           LegacySupport 1.0
+
+
+name                owntone
+
+fetch.type          git
+git.url             https://github.com/owntone/owntone-server.git
+
+version             28.8
+revision            0
+categories          multimedia
+license             BSD MIT
+maintainers         nomaintainer
+description         OwnTone is an open source (audio) media server for GNU/Linux, FreeBSD and MacOS.
+long_description    Owntone allows sharing and streaming your media library to iTunes (DAAP1), Roku (RSP), AirPlay devices (multiroom),\
+                    Chromecast and also supports local playback. You can control OwnTone via its web interface, Apple Remote \
+                    (and compatible DAAP/DACP clients), MPD clients or via its JSON API. \
+                    Besides serving your local music, podcast and audiobook media files, OwnTone supports internet \
+                    radios and Spotify (requires Spotify premium account). \
+                    Prior to version 28, OwnTone was called forked-daapd, which again was a rewrite of mt-daapd \
+                    (Firefly Media Server). \
+                    OwnTone is written in C with a web interface written in Vue.js.
+
+homepage            https://owntone.github.io/owntone-server/
+
+platform            darwin 9 {
+            compiler.whitelist      macports-gcc-7
+}
+
+platform            darwin 8 {
+            compiler.whitelist macports-gcc-7
+            default_variants   +noweb
+}
+
+
+depends_build-append \
+            port:automake \
+            port:bison \
+            port:autoconf \
+            port:libtool \
+            port:pkgconfig
+
+depends_lib-append \
+            port:libevent \
+            port:libgcrypt \
+            port:protobuf-c \
+            port:libunistring \
+            port:libconfuse \
+            port:libwebsockets \
+            port:ffmpeg \
+            port:libplist \
+            port:libsodium \
+            port:mxml \
+            port:libinotify-kqueue \
+            port:avahi \
+            port:json-c \
+            port:gawk \
+            port:sqlite3 \
+            port:curl \
+            port:pulseaudio
+
+depends_run \
+            port:gperf
+
+use_autoreconf      yes
+
+autoreconf.args     -iv
+
+configure.post_args \
+            --with-pulseaudio \
+            --without-avahi
+
+destroot.args       INSTALL_PREFIX=${destroot}${prefix}
+
+#
+#
+
+variant noweb description Removes the web interface (for using the HTTP API instead of web GUI) {
+configure.post_args \
+            --disable-webinterface \
+            --without-libwebsockets
+
+depends_lib-delete \
+            port:libwebsockets
+}
